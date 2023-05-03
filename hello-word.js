@@ -1,5 +1,11 @@
 console.log("Hello word")
 
-function myFun () {
+async function  myFun () {
+    await setTimeout(()=> {
+        console.log("hola desde async")
 
-}
+    }, 3000) 
+
+};
+
+myFun();
