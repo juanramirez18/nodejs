@@ -1,42 +1,20 @@
+import * as express from 'express';
+import router from './routes';
+import mongoose from 'mongoose'
 import { PrismaClient } from '@prisma/client'
 
+//conectarnos con la BD
+let connString : string = process.env.DATABASE_URL ?? "";
+mongoose.connect(connString).then(()=> console.log("Se ha conectado a la BD")).catch(()=> console.log("No se ha podido conectar a la BD") )
+
+//Crear nueva instacia de prisma
 const prisma = new PrismaClient()
 
-async function main() {
-    try {
-        // Connect the client
-        await prisma.$connect()
-  // ... you will write your Prisma Client queries here
-        console.log("Se ha conectado exitosamente a la BD")
+//Crear nueva instancia de Express
 
-  //Crear usuario en BD
-  const createUser = await prisma.user.create({
-    data:{
-        name: "juan carlos",
-        lastName: "Ramirez lopez",
-        email: "juanramirez1@hotmail.com"
+const app = express();
 
-    }
+//Agregar un middleware para manejar los JSON
+app.use(express.json())
 
-  })
-
-  //listar usuarios en al BD
-  const allUsers = await prisma.user.findMany();
-  console.log(allUsers)
-        
-    } catch (error) {
-        throw new Error(JSON.stringify(error))
-        
-    }
-  
-}
-
-main()
-  .then(async () => {
-    await prisma.$disconnect()
-  })
-  .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+app.use("/api", router)
