@@ -1,8 +1,9 @@
 import * as express from 'express';
+import usersRoutes from './usuarios'
 
 const router = express.Router();
-router.get("/usuarios");
-router.get("/productos");
-router.get("/categorias");
-router.get("/pedidos");
+router.use("/usuarios", usersRoutes);
+// router.use("/productos");
+// router.use("/categorias");
+// router.use("/pedidos");
 export default router

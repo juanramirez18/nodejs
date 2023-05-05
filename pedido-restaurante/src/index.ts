@@ -17,4 +17,10 @@ const app = express();
 //Agregar un middleware para manejar los JSON
 app.use(express.json())
 
+//Agregar un middleware para manejo de errores
+// app.use(error: Error, req: Request, res: Response)
+
 app.use("/api", router)
+app.listen(3000, () => {
+    console.log("servidor de node iniciado en el puerto 3000")
+})
